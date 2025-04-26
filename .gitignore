@@ -1,0 +1,9 @@
+node_modules
+
+/.wrangler
+/build
+.env
+.dev.vars
+
+.wrangler
+.DS_Store

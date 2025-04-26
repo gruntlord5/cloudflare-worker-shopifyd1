@@ -1,0 +1,27 @@
+{
+  "name": "cf-worker-shopify",
+  "compatibility_date": "2025-04-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "./server.ts",
+  "assets": {
+    "directory": "./build/client"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "upload_source_maps": true,
+  "nodejs_compat": true,
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "shop_auth"
+      // Remove the database_id so it can be auto-provisioned
+    }
+  ],
+  "vars": {
+    "SHOPIFY_API_KEY": "your_api_key_here",
+    "SHOPIFY_API_SECRET": "your_api_secret_here",
+    "SHOPIFY_APP_URL": "https://example.workers.dev",
+    "SCOPES": "write_products" // adjust scopes as needed
+  }
+}
