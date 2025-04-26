@@ -41,6 +41,8 @@ Before you begin, you'll need the following:
  "SCOPES": "write_products,read_orders", // adjust scopes as needed
 }
 ````
+You should consider storing them [as secrets in a production application.](https://developers.cloudflare.com/workers/configuration/secrets/) 
+
 ## Authenticating and querying data
 
 To authenticate and query data you can use the `shopify` const that is exported from `/app/shopify.server.ts`:
@@ -78,7 +80,9 @@ Please read the [documentation for @shopify/shopify-app-remix](https://www.npmjs
 
 ## Troubleshooting
 
-### "Error: Invalid appUrl configuration 'example.workers.dev', please provide a valid URL." When trying to update the domain in wrangler.jsonc
+### Updating the URL for your App
+
+You may get an error similar to this "Error: Invalid appUrl configuration 'example.workers.dev', please provide a valid URL." When trying to update the domain in wrangler.jsonc
 
 Make sure you have the url formatted properly, in this example it would be "https://example.workers.dev/"
 
