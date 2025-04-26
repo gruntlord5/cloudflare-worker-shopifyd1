@@ -78,6 +78,10 @@ Please read the [documentation for @shopify/shopify-app-remix](https://www.npmjs
 
 ## Troubleshooting
 
+### "Error: Invalid appUrl configuration 'example.workers.dev', please provide a valid URL." When trying to update the domain in wrangler.jsonc
+
+Make sure you have the url formatted properly, in this example it would be "https://example.workers.dev/"
+
 ### Navigating/redirecting breaks an embedded app
 
 Embedded Shopify apps must maintain the user session, which can be tricky inside an iFrame. To avoid issues:
