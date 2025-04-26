@@ -14,8 +14,8 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "shop_auth"
-      // Remove the database_id so it can be auto-provisioned
+      "database_name": "shop_auth",
+      "database_id": "${DATABASE_ID}"  // This placeholder will be replaced during deployment
     }
   ],
   "vars": {
