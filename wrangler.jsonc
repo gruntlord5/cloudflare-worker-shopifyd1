@@ -15,7 +15,7 @@
     {
       "binding": "DB",
       "database_name": "shop_auth",
-      "database_id": "${DATABASE_ID}"  // This placeholder will be replaced during deployment
+      "database_id": "151f7d9b-365f-41d7-83ed-0bf4eeef5086"  // This placeholder will be replaced during deployment
     }
   ],
   "vars": {
