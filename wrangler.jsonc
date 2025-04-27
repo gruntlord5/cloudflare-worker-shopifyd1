@@ -19,9 +19,9 @@
     }
   ],
   "vars": {
-    "SHOPIFY_API_KEY": "your_api_key_here",
-    "SHOPIFY_API_SECRET": "your_api_secret_here",
-    "SHOPIFY_APP_URL": "https://example.workers.dev",
+    "SHOPIFY_API_KEY": "your_api_key_here", // Don't use this in production, use secrets in the dashboard https://developers.cloudflare.com/workers/configuration/secrets/#adding-secrets-to-your-project
+    "SHOPIFY_API_SECRET": "your_api_secret_here", // Don't use this in production, use secrets in the dashboard https://developers.cloudflare.com/workers/configuration/secrets/#adding-secrets-to-your-project
+    "SHOPIFY_APP_URL": "https://example.workers.dev", // adjust as needed
     "SCOPES": "write_products" // adjust scopes as needed
   }
 }
