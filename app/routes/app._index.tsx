@@ -149,6 +149,11 @@ export default function Index() {
                    </Link>{" "}
                    mutation demo, to provide a starting point for app
                    development.
+                   Try the {" "}
+                   <Link url="/app/d1example" removeUnderline>
+                     D1 Example Route to view an example of using D1 in a remix route.
+                   </Link>
+                     
                  </Text>
                </BlockStack>
                <BlockStack gap="200">
