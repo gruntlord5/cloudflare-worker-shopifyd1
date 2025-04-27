@@ -35,13 +35,13 @@ Before you begin, you'll need the following:
 
 ```jsonc
 "vars": {
- "SHOPIFY_API_KEY": "your_api_key_here",
- "SHOPIFY_API_SECRET": "your_api_secret_here",
+ "SHOPIFY_API_KEY": "your_api_key_here", // Don't use this in production, use secrets in the dashboard https://developers.cloudflare.com/workers/configuration/secrets/#adding-secrets-to-your-project
+ "SHOPIFY_API_SECRET": "your_api_secret_here", // Don't use this in production, use secrets in the dashboard https://developers.cloudflare.com/workers/configuration/secrets/#adding-secrets-to-your-project
  "SHOPIFY_APP_URL": "https://your-worker-name.workers.dev",
  "SCOPES": "write_products,read_orders", // adjust scopes as needed
 }
 ````
-You should consider storing them [as secrets in a production application.](https://developers.cloudflare.com/workers/configuration/secrets/) 
+You should consider storing them [as secrets in a production application.](https://developers.cloudflare.com/workers/configuration/secrets/#adding-secrets-to-your-project) 
 
 ## Authenticating and querying data
 
