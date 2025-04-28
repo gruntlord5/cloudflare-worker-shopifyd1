@@ -1,0 +1,21 @@
+
+    // Change your DB bindings in your wrangler.jsonc and commit to your repo to enable DB2 and DB3 on the Multiple D1 Database Example page
+    // Make sure you also create them in the dashboard and update the IDs, we don't enable them in the default setup to prevent every deployment having extra databases
+    //You can learn how to create the databases in D1 here: https://developers.cloudflare.com/d1/get-started/#2-create-a-database
+"d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "shop_auth",
+      "database_id": "38020ece-a5cf-4795-92c9-e3e410920cfb"
+    },
+    {
+      "binding": "DB2",
+      "database_name": "shop_auth_exampledb2", //use this name when creating the database in the dashboard
+      "database_id": "Your_Database_ID_from_Dashboard" //put the ids from your D1 Database here
+    },
+    {
+      "binding": "DB3",
+      "database_name": "shop_auth_exampledb3", //use this name when creating the database in the dashboard
+      "database_id": "Your_Database_ID_from_Dashboard" //put the ids from your D1 Database here
+    }
+  ],
