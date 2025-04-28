@@ -42,41 +42,6 @@ Before you begin, you'll need the following:
 }
 ````
 You should consider storing them [as secrets in a production application.](https://developers.cloudflare.com/workers/configuration/secrets/#adding-secrets-to-your-project) 
-## Enabling Additional Databases
-This template supports multiple D1 databases which can be useful for more complex applications. Two additional databases (DB2 and DB3) are included in the configuration but commented out by default. Here's how to enable them:
-1. Create the databases in Cloudflare Dashboard:
-- Go to your Cloudflare Dashboard
-- Navigate to Workers & Pages > D1
-- Click "Create database"
-- Name your databases shop_auth_exampledb2 and shop_auth_exampledb3 (these names should match the database_name in your wrangler.jsonc)
-- Note the generated database IDs for each
-2. Update your wrangler.jsonc file
-```jsonc
-{
-  // ... other configuration
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "shop_auth",
-      "database_id": "151f7d9b-365f-41d7-83ed-0bf4eeef5086"
-    },
-    {
-      "binding": "DB2",
-      "database_name": "shop_auth_exampledb2",
-      "database_id": "your-actual-db2-id-from-dashboard"
-    },
-    {
-      "binding": "DB3",
-      "database_name": "shop_auth_exampledb3",
-      "database_id": "your-actual-db3-id-from-dashboard"
-    }
-  ],
-  // ... rest of configuration
-  ````
-
-3. Commit and deploy your changes:
-  - After deployment, your Worker will have access to all three databases. You can access them in your code using the bindings. 
-  - Visit the example page in the app to see how to interact with multiple databases.
 
 ## Authenticating and querying data
 
@@ -105,7 +70,6 @@ export async function loader({ request }) {
   return nodes;
 }
 ````
-
 This template comes preconfigured with examples of:
 
 1. Setting up your Shopify app in [/app/shopify.server.ts](https://github.com/Shopify/shopify-app-template-remix/blob/main/app/shopify.server.ts)

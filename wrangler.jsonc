@@ -15,23 +15,8 @@
     {
       "binding": "DB",
       "database_name": "shop_auth",
-      "database_id": "151f7d9b-365f-41d7-83ed-0bf4eeef5086"  // Placeholder Database IDs will be replaced during deployment
+      "database_id": "151f7d9b-365f-41d7-83ed-0bf4eeef5086"  // This placeholder will be replaced during deployment
     }
-    // Uncomment these (remove /* and */ lines) and commit to your repo to enable DB2 and DB3 on the Multiple D1 Database Example page
-    // Make sure you also create them in the dashboard and update the IDs, we don't enable them in the default setup to prevent every deployment having extra databases
-    //You can learn how to create the databases in D1 here: https://developers.cloudflare.com/d1/get-started/#2-create-a-database
-    /*,
-    {
-      "binding": "DB2",
-      "database_name": "shop_auth_exampledb2", //use this name when creating the database in the dashboard
-      "database_id": "Your_Database_ID_from_Dashboard"
-    },
-    {
-      "binding": "DB3",
-      "database_name": "shop_auth_exampledb3", //use this name when creating the database in the dashboard
-      "database_id": "Your_Database_ID_from_Dashboard"
-    }
-    */
   ],
   "vars": {
     "SHOPIFY_API_KEY": "your_api_key_here", // Don't use this in production, use secrets in the dashboard https://developers.cloudflare.com/workers/configuration/secrets/#adding-secrets-to-your-project

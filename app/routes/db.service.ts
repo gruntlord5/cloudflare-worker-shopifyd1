@@ -7,48 +7,32 @@ import type { D1Database } from '@cloudflare/workers-types';
 class DatabaseService {
   // The D1 database instance
   private db: D1Database | undefined;
-  // Track the current binding name
-  private currentBinding: string = 'DB';
 
   /**
    * Constructor that optionally accepts a D1 database instance
    * @param db - Optional D1Database instance
-   * @param bindingName - Optional binding name
    */
-  constructor(db?: D1Database, bindingName: string = 'DB') {
+  constructor(db?: D1Database) {
     this.db = db;
-    this.currentBinding = bindingName;
   }
 
   /**
    * Set the database instance directly
    * @param db - D1Database instance to use
-   * @param bindingName - Optional binding name
    */
-  public setDb(db: D1Database, bindingName: string = 'DB') {
+  public setDb(db: D1Database) {
     this.db = db;
-    this.currentBinding = bindingName;
-  }
-
-  /**
-   * Get the current binding name
-   * @returns The current binding name
-   */
-  public getCurrentBinding(): string {
-    return this.currentBinding;
   }
 
   /**
    * Initialize the database from the Remix context
    * @param context - The Remix loader/action context
-   * @param bindingName - The D1 binding name to use (default: 'DB')
    * @returns boolean indicating if database was successfully initialized
    */
-  public initFromContext(context: any, bindingName: string = 'DB'): boolean {
+  public initFromContext(context: any): boolean {
     // Check if Cloudflare D1 binding is available in the context
-    if (context?.cloudflare?.env?.[bindingName]) {
-      this.db = context.cloudflare.env[bindingName];
-      this.currentBinding = bindingName;
+    if (context?.cloudflare?.env?.DB) {
+      this.db = context.cloudflare.env.DB;
       return true;
     }
     return false;
@@ -64,8 +48,8 @@ class DatabaseService {
   public async executeQuery(query: string, params: any[] = []) {
     // Check if database is initialized
     if (!this.db) {
-      console.warn(`Attempted to execute query without database (${this.currentBinding}): ${query}`);
-      throw new Error(`Database not available: ${this.currentBinding}`);
+      console.warn(`Attempted to execute query without database: ${query}`);
+      throw new Error("Database not available");
     }
     
     try {
@@ -80,7 +64,7 @@ class DatabaseService {
         return await this.db.exec(query);
       }
     } catch (error) {
-      console.error(`Database (${this.currentBinding}) query error:`, error);
+      console.error("Database query error:", error);
       throw error;
     }
   }
@@ -95,8 +79,8 @@ class DatabaseService {
   public async getAllRows(query: string, params: any[] = []) {
     // Check if database is initialized
     if (!this.db) {
-      console.warn(`Attempted to get all rows without database (${this.currentBinding}): ${query}`);
-      throw new Error(`Database not available: ${this.currentBinding}`);
+      console.warn(`Attempted to get all rows without database: ${query}`);
+      throw new Error("Database not available");
     }
     
     try {
@@ -109,7 +93,7 @@ class DatabaseService {
         return await statement.all();
       }
     } catch (error) {
-      console.error(`Database (${this.currentBinding}) query error:`, error);
+      console.error("Database query error:", error);
       throw error;
     }
   }
@@ -124,8 +108,8 @@ class DatabaseService {
   public async getFirstRow(query: string, params: any[] = []) {
     // Check if database is initialized
     if (!this.db) {
-      console.warn(`Attempted to get first row without database (${this.currentBinding}): ${query}`);
-      throw new Error(`Database not available: ${this.currentBinding}`);
+      console.warn(`Attempted to get first row without database: ${query}`);
+      throw new Error("Database not available");
     }
     
     try {
@@ -138,64 +122,9 @@ class DatabaseService {
         return await statement.first();
       }
     } catch (error) {
-      console.error(`Database (${this.currentBinding}) query error:`, error);
+      console.error("Database query error:", error);
       throw error;
     }
-  }
-
-  /**
-   * Create a table if it doesn't exist
-   * @param tableName - Name of the table to create
-   * @param schema - SQL schema definition for the table
-   * @returns Result of the create table operation
-   */
-  public async createTableIfNotExists(tableName: string, schema: string) {
-    return this.executeQuery(`CREATE TABLE IF NOT EXISTS ${tableName} (${schema})`);
-  }
-
-  /**
-   * Update or insert a key-value setting with timestamp
-   * @param tableName - Name of the table to use
-   * @param key - Setting key
-   * @param value - Setting value
-   * @returns Result of the upsert operation
-   */
-  public async updateSetting(tableName: string, key: string, value: any) {
-    return this.executeQuery(
-      `INSERT OR REPLACE INTO ${tableName} (key, value, updated_at) VALUES (?, ?, ?)`,
-      [key, String(value), Date.now()]
-    );
-  }
-
-  /**
-   * Get a setting value by key
-   * @param tableName - Name of the table to query
-   * @param key - Setting key to retrieve
-   * @returns The setting value or undefined if not found
-   */
-  public async getSetting(tableName: string, key: string) {
-    return this.getFirstRow(`SELECT value FROM ${tableName} WHERE key = ?`, [key]);
-  }
-
-  /**
-   * Get all settings from a table
-   * @param tableName - Name of the table to query
-   * @returns All settings in the table
-   */
-  public async getAllSettings(tableName: string) {
-    return this.getAllRows(`SELECT key, value, updated_at FROM ${tableName}`);
-  }
-
-  /**
-   * Initialize a settings table with key-value-timestamp schema
-   * @param tableName - Name of the table to create
-   * @returns Result of the create table operation
-   */
-  public async initSettingsTable(tableName: string) {
-    return this.createTableIfNotExists(
-      tableName,
-      'key TEXT PRIMARY KEY, value TEXT, updated_at INTEGER'
-    );
   }
 }
 
