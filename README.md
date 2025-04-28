@@ -46,9 +46,9 @@ You should consider storing them [as secrets in a production application.](https
 This template supports multiple D1 databases which can be useful for more complex applications. Two additional databases (DB2 and DB3) are included in the configuration but commented out by default. Here's how to enable them:
 1. Create the databases in Cloudflare Dashboard:
 - Go to your Cloudflare Dashboard
-- Navigate to Workers & Pages > D1
-- Click "Create database"
-- Name your databases shop_auth_exampledb2 and shop_auth_exampledb3 (these names should match the database_name in your wrangler.jsonc)
+- Navigate to Storage & Databases > D1 SQL Database
+- Click "Create"
+- Name your databases shop_auth_exampledb2 and shop_auth_exampledb3 (these names should match the database name in your wrangler.jsonc)
 - Note the generated database IDs for each
 2. Update your wrangler.jsonc file
 ```jsonc
