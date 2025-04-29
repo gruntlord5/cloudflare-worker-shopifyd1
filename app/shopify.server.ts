@@ -29,12 +29,12 @@ class D1SessionStorage implements SessionStorage {
         (id, shop, state, isOnline, scope, accessToken, expires, onlineAccessInfo)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
       `).bind(
-        session.id,
-        session.shop,
-        session.state,
+        session.id || null,
+        session.shop || null,
+        session.state || null,
         session.isOnline ? 1 : 0,
-        session.scope,
-        session.accessToken,
+        session.scope || null,
+        session.accessToken || null,
         session.expires ? session.expires.getTime() : null,
         session.onlineAccessInfo ? JSON.stringify(session.onlineAccessInfo) : null
       ).run();
@@ -55,7 +55,7 @@ class D1SessionStorage implements SessionStorage {
     try {
       const result = await db.prepare(`
         SELECT * FROM shopify_sessions WHERE id = ?
-      `).bind(id).first();
+      `).bind(id || null).first();
       
       if (!result) return undefined;
       
@@ -94,7 +94,7 @@ class D1SessionStorage implements SessionStorage {
     try {
       await db.prepare(`
         DELETE FROM shopify_sessions WHERE id = ?
-      `).bind(id).run();
+      `).bind(id || null).run();
       return true;
     } catch (error) {
       console.error("Failed to delete session:", error);
@@ -130,7 +130,7 @@ class D1SessionStorage implements SessionStorage {
     try {
       const results = await db.prepare(`
         SELECT * FROM shopify_sessions WHERE shop = ?
-      `).bind(shop).all();
+      `).bind(shop || null).all();
       
       return results.results.map(result => {
         const session = new Session({
