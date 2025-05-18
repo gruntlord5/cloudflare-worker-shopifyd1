@@ -10,7 +10,6 @@
     "enabled": true
   },
   "upload_source_maps": true,
-  "nodejs_compat": true,
   "d1_databases": [
     {
       "binding": "DB",
