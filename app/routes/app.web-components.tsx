@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
+import { Link } from "@shopify/polaris";
 
 export default function WebComponentsTest() {
  const [showBanner, setShowBanner] = useState(false);
@@ -7,6 +8,7 @@ export default function WebComponentsTest() {
  const [nameInputValue, setNameInputValue] = useState('');
  const [showSpinner, setShowSpinner] = useState(false);
  const [buttonLoading, setButtonLoading] = useState(false);
+ const [selectedPage, setSelectedPage] = useState(''); // This should match the placeholder option value
  const [componentStatusData, setComponentStatusData] = useState([
    { id: 'banner', name: 'Banner Notification', status: 'Inactive', time: new Date().toLocaleTimeString() },
    { id: 'toast', name: 'Toast Notification', status: 'Inactive', time: new Date().toLocaleTimeString() },
@@ -23,6 +25,34 @@ export default function WebComponentsTest() {
      setShowSpinner(false);
      setButtonLoading(false);
    }, 3000);
+ };
+
+ // Handle select change
+ const handleSelectChange = (event) => {
+   const value = event.currentTarget.value;
+   
+   if (value && value !== '') {
+     setSelectedPage(value);
+     
+     // Trigger the hidden link click after state update
+     setTimeout(() => {
+       const hiddenLink = document.getElementById('hidden-navigation-link');
+       if (hiddenLink) {
+         hiddenLink.click();
+       }
+     }, 10);
+     
+     // Reset the select back to placeholder after a brief delay
+     setTimeout(() => {
+       setSelectedPage('');
+       const select = document.querySelector('s-select[data-type="navigation"]');
+       if (select) {
+         select.value = '';
+       }
+     }, 100);
+   } else {
+     setSelectedPage(value);
+   }
  };
 
  // Handle sorting
@@ -54,6 +84,22 @@ export default function WebComponentsTest() {
      return 0;
    });
  }, [componentStatusData, sortConfig]);
+
+ // Handle select component change
+ useEffect(() => {
+   const select = document.querySelector('s-select[data-type="navigation"]');
+   if (select) {
+     // Set initial value to show placeholder
+     select.value = '';
+     select.addEventListener('change', handleSelectChange);
+   }
+
+   return () => {
+     if (select) {
+       select.removeEventListener('change', handleSelectChange);
+     }
+   };
+ }, []);
 
  // Handle checkbox change to toggle banner visibility
  useEffect(() => {
@@ -261,6 +307,30 @@ export default function WebComponentsTest() {
              {' '}
              <s-spinner accessibilityLabel="Loading" size="base"></s-spinner>
            </>
+         )}
+         {' '}
+         <s-select 
+           data-type="navigation"
+           value=""
+           placeholder="Select a component to see more examples"
+         >
+           <s-option value="">Select a component to see more examples</s-option>
+           <s-option value="/app/table">Table Example Page</s-option>
+           <s-option value="/app/section">Section Example Page</s-option>
+           <s-option value="/app/page">Page Example Page</s-option>
+           <s-option value="/app/banner">Banner Example Page</s-option>
+           <s-option value="/app/button">Button Example Page</s-option>
+         </s-select>
+         {selectedPage && (
+           <div style={{ position: 'absolute', left: '-9999px', visibility: 'hidden' }}>
+             <Link 
+               url={selectedPage}
+               external
+               id="hidden-navigation-link"
+             >
+               Hidden Link
+             </Link>
+           </div>
          )}
        </s-paragraph>
      </s-section>
